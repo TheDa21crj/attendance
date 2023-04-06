@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
-// const connectDB = require("./config/db");
+const connectDB = require("./config/db");
 const cookieParser = require("cookie-parser");
 const path = require("path");
 
@@ -16,15 +16,19 @@ app.use(function (req, res, next) {
   next();
 });
 
-// connectDB();
+// connect to DB
+connectDB();
 
 // init middleware
 app.use(express.json({ extended: false }));
 
+// cookieParser
 app.use(cookieParser());
 
+// PORT
 const port = process.env.PORT;
 
+// listen
 app.listen(port, () => {
   console.log(`Server started on port ${port}`);
 });
