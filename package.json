@@ -1,0 +1,22 @@
+{
+  "name": "attendance",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheDa21crj/attendance.git"
+  },
+  "author": "Rishav Singh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TheDa21crj/attendance/issues"
+  },
+  "homepage": "https://github.com/TheDa21crj/attendance#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
