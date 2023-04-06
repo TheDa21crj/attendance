@@ -28,6 +28,10 @@ app.use(cookieParser());
 // routes
 app.use("/api/user", require("./routes/user"));
 
+app.get("/test", (req, res) => {
+  return res.status(202).json({ message: "Hello World" });
+});
+
 // PORT
 const port = process.env.PORT;
 
