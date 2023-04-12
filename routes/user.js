@@ -8,9 +8,9 @@ router.post(
   [check("payload", "payload is Required").not().isEmpty()],
   async (req, res) => {
     const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
+    // if (!errors.isEmpty()) {
+    //   return res.status(400).json({ errors: errors.array() });
+    // }
     const { payload } = req.body;
 
     try {
