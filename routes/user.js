@@ -16,7 +16,7 @@ router.post(
     try {
       console.log(values);
       console.log(typeof values);
-      return res.status(202).json({ message: values });
+      return res.status(202).json("Success");
     } catch (error) {
       console.log(error);
       return res.status(500).json({ message: error });
