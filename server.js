@@ -8,10 +8,7 @@ const path = require("path");
 const app = express();
 
 app.use(function (req, res, next) {
-  res.header(
-    "Access-Control-Allow-Origin",
-    "attendance-production-1373.up.railway.app"
-  );
+  res.header("Access-Control-Allow-Origin", process.env.AllowOrigin);
   res.header("Access-Control-Allow-Credentials", true);
   res.header(
     "Access-Control-Allow-Headers",
@@ -35,6 +32,12 @@ app.use("/api/attendance", require("./routes/save"));
 
 app.get("/test", (req, res) => {
   return res.status(202).json({ message: "Hello World" });
+});
+
+app.get("/env", (req, res) => {
+  return res
+    .status(202)
+    .json({ message: `process.env.AllowOrigin = ${process.env.AllowOrigin}` });
 });
 
 // PORT
