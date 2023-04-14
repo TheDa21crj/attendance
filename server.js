@@ -35,9 +35,7 @@ app.get("/test", (req, res) => {
 });
 
 app.get("/env", (req, res) => {
-  return res
-    .status(202)
-    .json({ message: `process.env.AllowOrigin = ${process.env.AllowOrigin}` });
+  return res.status(202).json({ message: `${process.env.AllowOrigin}` });
 });
 
 // PORT
