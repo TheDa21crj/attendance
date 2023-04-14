@@ -15,7 +15,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { email } = req.body;
+    const { email, value } = req.body;
 
     const result = await User.updateOne(
       { email },
