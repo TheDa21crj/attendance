@@ -19,6 +19,18 @@ const UserSchema = new mongoose.Schema({
     type: "string",
     default: "stop",
   },
+  attendance: [
+    {
+      roll: {
+        type: "string",
+        required: true,
+      },
+      date: {
+        type: Date,
+        default: Date.now,
+      },
+    },
+  ],
   tokens: [
     {
       token: {
