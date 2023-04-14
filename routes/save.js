@@ -1,16 +1,33 @@
 const express = require("express");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
-const gravatar = require("gravatar");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 const config = require("config");
 const User = require("./../Schema/user");
 
 // Public || Start Attendance
-router.post("/startAttendance", async (req, res) => {
-  return res.status(202).json({ message: "Start" });
-});
+router.post(
+  "/startAttendance",
+  [check("email", "email is Required").not().isEmpty()],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { email } = req.body;
+
+    const result = await User.updateOne(
+      { email },
+      {
+        $set: {
+          start: "start",
+        },
+      }
+    );
+
+    return res.status(202).json({ message: "Start" });
+  }
+);
 
 // Public
 router.post(
