@@ -15,6 +15,10 @@ const UserSchema = new mongoose.Schema({
     type: "string",
     required: true,
   },
+  start: {
+    type: "string",
+    default: "start",
+  },
   tokens: [
     {
       token: {
