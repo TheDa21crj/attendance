@@ -21,7 +21,6 @@ router.post(
 
     try {
       console.log(values);
-      console.log(typeof values);
       return res.status(202).json("Success");
     } catch (error) {
       console.log(error);
@@ -112,7 +111,8 @@ router.post(
 );
 
 // Private || Account Data || api/account
-router.get("/account", UserAuth, async (req, res) => {
+router.get("/account", async (req, res) => {
+  console.log("account");
   res.status(200).send({ message: req.dataUser });
 });
 
