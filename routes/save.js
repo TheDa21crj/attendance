@@ -7,6 +7,11 @@ const jwt = require("jsonwebtoken");
 const config = require("config");
 const User = require("./../Schema/user");
 
+// Public || Start Attendance
+router.post("/startAttendance", async (req, res) => {
+  return res.status(202).json({ message: "Start" });
+});
+
 // Public
 router.post(
   "/start",
