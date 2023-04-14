@@ -50,10 +50,26 @@ router.post(
       console.log(emailGlobal);
       console.table(valuesArray);
 
-      let user = await User.findOne({ emailGlobal });
+      let user = await User.findOne({ email: emailGlobal });
+
+      let attendances = {};
+      attendance.roll = valuesArray[0];
+      attendance.name = valuesArray[1];
+      attendance.branch = valuesArray[3];
 
       if (user) {
-        return res.status(202).json("Success");
+        if (user.start === "Start") {
+          // const result = await User.updateOne(
+          //   { email: emailGlobal },
+          //   {
+          //     $set: {
+          //       attendance: value,
+          //     },
+          //   }
+          // );
+
+          return res.status(202).json("Success");
+        }
       } else {
         return res.status(202).json("No User");
       }
