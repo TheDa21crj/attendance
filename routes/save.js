@@ -4,6 +4,8 @@ const { check, validationResult } = require("express-validator");
 const config = require("config");
 const User = require("./../Schema/user");
 
+var emailGlobal;
+
 // Public || Start Attendance
 router.post(
   "/StartorStopAttendance",
@@ -26,6 +28,7 @@ router.post(
       }
     );
 
+    emailGlobal = email;
     return res.status(202).json({ message: value });
   }
 );
@@ -44,6 +47,7 @@ router.post(
     try {
       const valuesArray = values.split(",");
 
+      console.log(emailGlobal);
       console.table(valuesArray);
 
       return res.status(202).json("Success");
