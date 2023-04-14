@@ -6,8 +6,9 @@ const User = require("./../Schema/user");
 
 // Public || Start Attendance
 router.post(
-  "/startAttendance",
+  "/StartorStopAttendance",
   [check("email", "email is Required").not().isEmpty()],
+  [check("value", "value is Required").not().isEmpty()],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -20,12 +21,12 @@ router.post(
       { email },
       {
         $set: {
-          start: "start",
+          start: value,
         },
       }
     );
 
-    return res.status(202).json({ message: "Start" });
+    return res.status(202).json({ message: value });
   }
 );
 
