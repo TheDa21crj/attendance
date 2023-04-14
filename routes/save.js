@@ -50,7 +50,13 @@ router.post(
       console.log(emailGlobal);
       console.table(valuesArray);
 
-      return res.status(202).json("Success");
+      let user = await User.findOne({ emailGlobal });
+
+      if (user) {
+        return res.status(202).json("Success");
+      } else {
+        return res.status(202).json("No User");
+      }
     } catch (error) {
       console.log(error);
       return res.status(500).json({ message: error });
