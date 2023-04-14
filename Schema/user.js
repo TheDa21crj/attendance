@@ -21,7 +21,15 @@ const UserSchema = new mongoose.Schema({
   },
   attendance: [
     {
+      name: {
+        type: "string",
+        required: true,
+      },
       roll: {
+        type: "string",
+        required: true,
+      },
+      branch: {
         type: "string",
         required: true,
       },
