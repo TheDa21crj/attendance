@@ -17,7 +17,7 @@ const UserSchema = new mongoose.Schema({
   },
   start: {
     type: "string",
-    default: "start",
+    default: "stop",
   },
   tokens: [
     {
