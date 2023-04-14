@@ -19,8 +19,6 @@ router.post(
     const { values } = req.body;
 
     try {
-      console.log(values);
-
       const valuesArray = values.split(",");
 
       console.table(valuesArray);
