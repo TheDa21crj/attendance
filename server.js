@@ -9,10 +9,6 @@ const app = express();
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", process.env.AllowOrigin);
-  // res.header(
-  //   "Access-Control-Allow-Origin",
-  //   "attendance-production-1373.up.railway.app"
-  // );
   res.header("Access-Control-Allow-Credentials", true);
   res.header(
     "Access-Control-Allow-Headers",
