@@ -20,6 +20,11 @@ router.post(
 
     try {
       console.log(values);
+
+      const valuesArray = values.split(",");
+
+      console.table(valuesArray);
+
       return res.status(202).json("Success");
     } catch (error) {
       console.log(error);
