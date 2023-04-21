@@ -7,13 +7,28 @@ const path = require("path");
 
 const app = express();
 
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", process.env.AllowOrigin);
-  res.header("Access-Control-Allow-Credentials", true);
-  res.header(
+// app.use(function (req, res, next) {
+//   res.header("Access-Control-Allow-Origin", process.env.AllowOrigin);
+//   res.header("Access-Control-Allow-Credentials", true);
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept"
+//   );
+//   next();
+// });
+
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
   );
+
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PATCH, DELETE,OPTIONS"
+  );
+
   next();
 });
 
