@@ -61,6 +61,7 @@ router.post(
 
       if (user) {
         if (user.start === "Start") {
+          console.log(user.attendance.length);
           const result = await User.updateOne(
             { email: emailGlobal },
             {
