@@ -24,14 +24,17 @@ const UserSchema = new mongoose.Schema({
       name: {
         type: "string",
         required: true,
+        default: "",
       },
       roll: {
         type: "string",
         required: true,
+        default: "",
       },
       branch: {
         type: "string",
         required: true,
+        default: "",
       },
       date: {
         type: Date,
