@@ -116,15 +116,6 @@ router.get("/View", async (req, res) => {
   } else {
     return res.status(202).json({ message: "No Such User" });
   }
-
-  // const result = await User.updateOne(
-  //   { email },
-  //   {
-  //     $set: {
-  //       start: value,
-  //     },
-  //   }
-  // );
 });
 
 module.exports = router;
