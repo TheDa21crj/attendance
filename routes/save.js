@@ -12,8 +12,6 @@ const User = require("./../Schema/user");
 // middleware
 const auth = require("./../middleware/UserAuth");
 
-var emailGlobal;
-
 // Public || Start Attendance
 router.post(
   "/StartorStopAttendance",
@@ -57,12 +55,13 @@ router.post(
     const { values } = req.body;
 
     try {
+      const email = res.locals.userData.userEmail;
+
       const valuesArray = values.split(",");
 
-      console.log(emailGlobal);
       console.table(valuesArray);
 
-      let user = await User.findOne({ email: emailGlobal });
+      let user = await User.findOne({ email });
 
       var date = moment().utc("Asia/Kolkata").format("DD-MM-yyyy").toString();
 
@@ -79,7 +78,7 @@ router.post(
           console.log(user.attendance.length);
           if (user.attendance.length === 0) {
             const result = await User.updateOne(
-              { email: emailGlobal },
+              { email },
               {
                 $set: {
                   attendance: attendances,
@@ -89,7 +88,7 @@ router.post(
             return res.status(202).json("Success");
           } else {
             let add = await User.findOneAndUpdate(
-              { email: emailGlobal },
+              { email },
               {
                 $push: {
                   attendance: attendances,
