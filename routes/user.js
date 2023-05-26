@@ -8,6 +8,7 @@ const auth = require("./../middleware/UserAuth");
 const userController = require("../controllers/userController");
 const loginController = require("../controllers/loginController");
 
+// validator
 const { check } = require("express-validator");
 
 // Public || Get Register User
