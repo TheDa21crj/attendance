@@ -63,49 +63,48 @@ router.post(
 
       let user = await User.findOne({ email });
 
-      var date = moment().utc("Asia/Kolkata").format("DD-MM-yyyy").toString();
-
-      let time = moment().utc("Asia/Kolkata").format("DD-MM-yyyy").toString();
-      console.log(time);
+      let date = moment().utc("Asia/Kolkata").format("DD-MM-yyyy").toString();
+      let time = moment().utc("Asia/Kolkata").format("hh:mm").toString();
 
       let attendances = {};
       attendances.roll = valuesArray[0].trim();
       attendances.name = valuesArray[1].trim();
       attendances.branch = valuesArray[2].trim();
       attendances.date = date;
+      attendances.time = time;
 
-      // console.log(attendances);
+      console.log(attendances);
 
-      // if (user) {
-      //   if (user.start === "Start") {
-      //     console.log(user.attendance.length);
-      //     if (user.attendance.length === 0) {
-      //       const result = await User.updateOne(
-      //         { email },
-      //         {
-      //           $set: {
-      //             attendance: attendances,
-      //           },
-      //         }
-      //       );
-      //       return res.status(202).json("Success");
-      //     } else {
-      //       let add = await User.findOneAndUpdate(
-      //         { email },
-      //         {
-      //           $push: {
-      //             attendance: attendances,
-      //           },
-      //         }
-      //       );
-      //       return res.status(202).json("+ attendances");
-      //     }
-      //   } else {
-      //     return res.status(202).json("Invalid Time");
-      //   }
-      // } else {
-      //   return res.status(202).json("No User");
-      // }
+      if (user) {
+        if (user.start === "Start") {
+          console.log(user.attendance.length);
+          if (user.attendance.length === 0) {
+            const result = await User.updateOne(
+              { email },
+              {
+                $set: {
+                  attendance: attendances,
+                },
+              }
+            );
+            return res.status(202).json("Success");
+          } else {
+            let add = await User.findOneAndUpdate(
+              { email },
+              {
+                $push: {
+                  attendance: attendances,
+                },
+              }
+            );
+            return res.status(202).json("+ attendances");
+          }
+        } else {
+          return res.status(202).json("Invalid Time");
+        }
+      } else {
+        return res.status(202).json("No User");
+      }
     } catch (error) {
       console.log(error);
       return res.status(500).json({ message: error });
