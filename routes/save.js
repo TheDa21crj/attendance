@@ -106,30 +106,20 @@ router.post(
 router.use(auth);
 
 // Private || View Attendance
-router.post(
-  "/StartorStopAttendance",
-  [check("email", "email is Required").not().isEmpty()],
-  [check("value", "value is Required").not().isEmpty()],
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
+router.post("/View", async (req, res) => {
+  const email = res.locals.userData.userEmail;
 
-    const { email, value } = req.body;
+  // const result = await User.updateOne(
+  //   { email },
+  //   {
+  //     $set: {
+  //       start: value,
+  //     },
+  //   }
+  // );
 
-    const result = await User.updateOne(
-      { email },
-      {
-        $set: {
-          start: value,
-        },
-      }
-    );
-
-    emailGlobal = email;
-    return res.status(202).json({ message: value });
-  }
-);
+  emailGlobal = email;
+  return res.status(202).json({ message: email });
+});
 
 module.exports = router;
