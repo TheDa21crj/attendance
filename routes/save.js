@@ -1,7 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
+
+// Schema
 const User = require("./../Schema/user");
+
+// middleware
+const auth = require("./../middleware/UserAuth");
 
 var emailGlobal;
 
@@ -94,5 +99,10 @@ router.post(
     }
   }
 );
+
+// auth
+router.use(auth);
+
+// Private || View Attendance
 
 module.exports = router;
