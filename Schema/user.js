@@ -3,6 +3,10 @@ const config = require("config");
 const jwt = require("jsonwebtoken");
 
 const UserSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
   email: {
     type: "string",
     required: true,
