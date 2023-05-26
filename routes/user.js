@@ -1,9 +1,14 @@
 const express = require("express");
 const router = express.Router();
+
+// middleware
+const auth = require("./../middleware/UserAuth");
+
+// controllers
 const userController = require("../controllers/userController");
 const loginController = require("../controllers/loginController");
+
 const { check } = require("express-validator");
-const auth = require("./../middleware/UserAuth");
 
 // Public || Get Register User
 router.post(
