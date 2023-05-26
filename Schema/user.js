@@ -46,14 +46,6 @@ const UserSchema = new mongoose.Schema({
       },
     },
   ],
-  tokens: [
-    {
-      token: {
-        type: "string",
-        required: true,
-      },
-    },
-  ],
   date: {
     type: Date,
     default: Date.now,
@@ -61,16 +53,11 @@ const UserSchema = new mongoose.Schema({
 });
 
 // token
-UserSchema.methods.generateToken = async function () {
-  try {
-    console.log(this._id);
-    let token = jwt.sign({ _id: this._id }, config.get("jwtTokenAuth"));
-    this.tokens = this.tokens.concat({ token: token });
-    await this.save();
-    return token;
-  } catch (error) {
-    console.log(error);
-  }
-};
+UserSchema.pre("save", async function (next) {
+  const salt = await bcrypt.genSalt(10);
+
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
 
 module.exports = Users = mongoose.model("User", UserSchema);
