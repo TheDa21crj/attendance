@@ -66,9 +66,9 @@ router.post(
       var date = moment().utc("Asia/Kolkata").format("DD-MM-yyyy").toString();
 
       let attendances = {};
-      attendances.roll = valuesArray[0];
-      attendances.name = valuesArray[1];
-      attendances.branch = valuesArray[2];
+      attendances.roll = valuesArray[0].trim();
+      attendances.name = valuesArray[1].trim();
+      attendances.branch = valuesArray[2].trim();
       attendances.date = date;
 
       console.log(attendances);
