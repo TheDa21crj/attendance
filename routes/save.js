@@ -64,7 +64,7 @@ router.post(
       let user = await User.findOne({ email });
 
       let date = moment().utc("Asia/Kolkata").format("DD-MM-yyyy").toString();
-      let time = moment().utc("Asia/Kolkata").format("hh:mm").toString();
+      let time = moment().utc("Asia/Kolkata").format("hh:mm:ss").toString();
 
       let attendances = {};
       attendances.roll = valuesArray[0].trim();
