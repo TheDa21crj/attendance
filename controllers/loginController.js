@@ -1,5 +1,5 @@
 const HttpError = require("./../models/HttpError");
-const user = require("./../models/userSchema");
+const user = require("./../Schema/user");
 const jwt = require("jsonwebtoken");
 const { check, validationResult } = require("express-validator");
 const nodemailer = require("nodemailer");
