@@ -41,6 +41,9 @@ router.post(
   }
 );
 
+// auth
+router.use(auth);
+
 // Public || Save Attendance
 router.post(
   "/start",
@@ -50,6 +53,7 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
+
     const { values } = req.body;
 
     try {
@@ -106,9 +110,6 @@ router.post(
     }
   }
 );
-
-// auth
-router.use(auth);
 
 // Private || View Attendance
 router.get("/View", async (req, res) => {
