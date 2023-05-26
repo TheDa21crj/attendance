@@ -67,8 +67,8 @@ router.post(
 
       let attendances = {};
       attendances.roll = valuesArray[0];
-      attendances.name = valuesArray[1].concat(" " + valuesArray[2]);
-      attendances.branch = valuesArray[3];
+      attendances.name = valuesArray[1];
+      attendances.branch = valuesArray[2];
       attendances.date = date;
 
       console.log(attendances);
