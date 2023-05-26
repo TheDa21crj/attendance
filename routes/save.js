@@ -109,7 +109,7 @@ router.use(auth);
 router.get("/View", async (req, res) => {
   const email = res.locals.userData.userEmail;
 
-  const user = await User.findOne(email);
+  const user = await User.findOne({ email });
 
   if (user) {
     return res.status(202).json({ message: user.attendance });
