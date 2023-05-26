@@ -1,41 +1,23 @@
 const jwt = require("jsonwebtoken");
-const User = require("./../Schema/user");
-const config = require("config");
-const express = require("express");
-const router = express.Router();
-const bcrypt = require("bcryptjs");
+const HttpError = require("../models/HttpError");
 
-const UserAuth = async (req, res, next) => {
+module.exports = (req, res, next) => {
+  if (req.method === "OPTIONS") {
+    return next();
+  }
   try {
-    const token = req.cookies.jwt;
+    const token = req.headers.authorization; // Authorization: 'Bearer TOKEN'
 
-    const vToken = jwt.verify(token, config.get("jwtTokenAuth"));
-
-    let data = await User.findOne({ email: "rishavraj@gmail.com" });
-
-    console.log(vToken);
-    console.log(data);
-
-    const dataUser = await User.findOne({
-      // _id: vToken._id,
-      "tokens.token": token,
-    });
-
-    // console.log(token);
-    console.log(dataUser);
-
-    if (!dataUser) {
-      throw new Error("Couldn't find");
+    if (!token) {
+      const error = new HttpError("Authentication failed!", 401);
+      return next(error);
     }
-
-    req.token = token;
-    req.dataUser = dataUser;
-    req.userId = dataUser._id;
-
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRATE);
+    res.locals.userData = { userEmail: decodedToken.userEmail };
     next();
-  } catch (error) {
-    res.status(401).json({ errors: error });
+  } catch (err) {
+    const error = new HttpError("Authentication failed!", 403);
+    console.log(err);
+    return next(error);
   }
 };
-
-module.exports = UserAuth;
