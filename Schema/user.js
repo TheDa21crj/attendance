@@ -20,7 +20,7 @@ const UserSchema = new mongoose.Schema({
   },
   start: {
     type: "string",
-    default: "stop",
+    default: "Stop",
   },
   attendance: [
     {
@@ -40,7 +40,7 @@ const UserSchema = new mongoose.Schema({
         default: "",
       },
       date: {
-        type: Date,
+        type: String,
         default: Date.now,
       },
     },
