@@ -106,7 +106,7 @@ router.post(
 router.use(auth);
 
 // Private || View Attendance
-router.post("/View", async (req, res) => {
+router.get("/View", async (req, res) => {
   const email = res.locals.userData.userEmail;
 
   // const result = await User.updateOne(
