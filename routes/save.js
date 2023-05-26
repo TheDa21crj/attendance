@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+
+// validator
 const { check, validationResult } = require("express-validator");
 
 // Schema
