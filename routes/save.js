@@ -112,7 +112,7 @@ router.get("/View", async (req, res) => {
   const user = await User.findOne(email);
 
   if (user) {
-    return res.status(202).json({ message: email });
+    return res.status(202).json({ message: user.attendance });
   } else {
     return res.status(202).json({ message: "No Such User" });
   }
