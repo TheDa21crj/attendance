@@ -1,4 +1,6 @@
 const express = require("express");
+const moment = require("moment");
+
 const router = express.Router();
 
 // validator
@@ -58,10 +60,13 @@ router.post(
 
       let user = await User.findOne({ email: emailGlobal });
 
+      var date = moment().utc("Asia/Kolkata").format("DD-MM-yyyy").toString();
+
       let attendances = {};
       attendances.roll = valuesArray[0];
       attendances.name = valuesArray[1].concat(" " + valuesArray[2]);
       attendances.branch = valuesArray[3];
+      attendances.date = date;
 
       console.log(attendances);
 
