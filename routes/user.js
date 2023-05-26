@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
+const auth = require("../middleWare/UserAuth");
 const userController = require("../controllers/userController");
 const loginController = require("../controllers/loginController");
-const auth = require("../middleWare/auth");
 const { check, validationResult } = require("express-validator");
 
 // Public || Get Register User
