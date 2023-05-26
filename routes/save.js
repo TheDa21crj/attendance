@@ -109,6 +109,14 @@ router.use(auth);
 router.get("/View", async (req, res) => {
   const email = res.locals.userData.userEmail;
 
+  const user = await User.findOne(email);
+
+  if (user) {
+    return res.status(202).json({ message: email });
+  } else {
+    return res.status(202).json({ message: "No Such User" });
+  }
+
   // const result = await User.updateOne(
   //   { email },
   //   {
@@ -117,9 +125,6 @@ router.get("/View", async (req, res) => {
   //     },
   //   }
   // );
-
-  emailGlobal = email;
-  return res.status(202).json({ message: email });
 });
 
 module.exports = router;
