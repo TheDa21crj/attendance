@@ -13,9 +13,7 @@ const UserAuth = async (req, res, next) => {
 
     let data = await User.findOne({ email: "rishavraj@gmail.com" });
 
-    console.log("vToken====================================================");
     console.log(vToken);
-    console.log("data======================================================");
     console.log(data);
 
     const dataUser = await User.findOne({
