@@ -36,6 +36,7 @@ app.use("/api/user", require("./routes/user"));
 app.use("/api/attendance", require("./routes/save"));
 
 app.get("/test", (req, res) => {
+  console.log("Test Route");
   return res.status(202).json({ message: "Hello World" });
 });
 
