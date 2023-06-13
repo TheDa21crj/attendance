@@ -96,7 +96,7 @@ router.post(
       //           },
       //         }
       //       );
-      return res.status(202).json("+ attendances");
+      return res.status(200).json("+ attendances");
       //     }
       //   } else {
       //     return res.status(202).json("Invalid Time");
