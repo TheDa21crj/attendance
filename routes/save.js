@@ -40,7 +40,6 @@ router.post(
 );
 
 // auth
-router.use(auth);
 
 // Public || Save Attendance
 router.post(
@@ -55,13 +54,13 @@ router.post(
     const { values } = req.body;
 
     try {
-      const email = res.locals.userData.userEmail;
+      // const email = res.locals.userData.userEmail;
 
       const valuesArray = values.split(",");
 
       console.table(valuesArray);
 
-      let user = await User.findOne({ email });
+      // let user = await User.findOne({ email });
 
       let date = moment().utc("Asia/Kolkata").format("DD-MM-yyyy").toString();
       let time = moment().utc("Asia/Kolkata").format("hh:mm:ss").toString();
@@ -75,42 +74,44 @@ router.post(
 
       console.log(attendances);
 
-      if (user) {
-        if (user.start === "Start") {
-          console.log(user.attendance.length);
-          if (user.attendance.length === 0) {
-            const result = await User.updateOne(
-              { email },
-              {
-                $set: {
-                  attendance: attendances,
-                },
-              }
-            );
-            return res.status(202).json("Success");
-          } else {
-            let add = await User.findOneAndUpdate(
-              { email },
-              {
-                $push: {
-                  attendance: attendances,
-                },
-              }
-            );
-            return res.status(202).json("+ attendances");
-          }
-        } else {
-          return res.status(202).json("Invalid Time");
-        }
-      } else {
-        return res.status(202).json("No User");
-      }
+      // if (user) {
+      //   if (user.start === "Start") {
+      //     console.log(user.attendance.length);
+      //     if (user.attendance.length === 0) {
+      //       const result = await User.updateOne(
+      //         { email },
+      //         {
+      //           $set: {
+      //             attendance: attendances,
+      //           },
+      //         }
+      //       );
+      //       return res.status(202).json("Success");
+      //     } else {
+      //       let add = await User.findOneAndUpdate(
+      //         { email },
+      //         {
+      //           $push: {
+      //             attendance: attendances,
+      //           },
+      //         }
+      //       );
+      return res.status(202).json("+ attendances");
+      //     }
+      //   } else {
+      //     return res.status(202).json("Invalid Time");
+      //   }
+      // } else {
+      //   return res.status(202).json("No User");
+      // }
     } catch (error) {
       console.log(error);
       return res.status(500).json({ message: error });
     }
   }
 );
+
+router.use(auth);
 
 // Private || View Attendance
 router.get("/View", async (req, res) => {
