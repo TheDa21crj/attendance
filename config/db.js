@@ -1,14 +1,13 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
 
+const MONGOURI = process.env.MONGOURI;
+
 const connectDB = async () => {
   try {
-    await mongoose.connect(
-      "mongodb+srv://rishavrajcrj:UPqM67S6ndco02tf@attendance.2jrpkus.mongodb.net/?retryWrites=true&w=majority",
-      {
-        useNewUrlParser: true,
-      }
-    );
+    await mongoose.connect(MONGOURI, {
+      useNewUrlParser: true,
+    });
     console.log("DataBase Connected");
   } catch (error) {
     console.log(error);
