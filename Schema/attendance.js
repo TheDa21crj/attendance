@@ -11,3 +11,7 @@ const attendanceSchema = new mongoose.Schema({
     default: new Date(),
   },
 });
+
+const Attendance = mongoose.model("attendance", attendanceSchema);
+
+export default Attendance;
