@@ -1,8 +1,8 @@
 const { validationResult } = require("express-validator");
 const AttendanceControl = require("../Schema/attendanceControl");
-const { default: Attendance } = require("../Schema/attendance");
+const { Attendance } = require("../Schema/attendance");
 
-const Users = require("../models/user");
+const User = require("../Schema/user");
 
 /*
   Required values in request :
@@ -82,7 +82,7 @@ async function view(req, res) {
 }
 
 module.exports = {
-  startorStopAttendance: startOrStopAttendance,
+  startOrStopAttendance,
   start,
   view,
 };

@@ -12,15 +12,10 @@ const register = async (req, res, next) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-  const { name, email, password } = req.body;
+  const { name, email, password, roll, branch } = req.body;
 
   let users;
-  try {
-    users = await user.findOne({ email });
-  } catch (e) {
-    const error = new HttpError("Wrong Email Credentials", 400);
-    return next(error);
-  }
+  users = await user.findOne({ email });
 
   if (users) {
     res.json({ exists: true });
@@ -29,6 +24,7 @@ const register = async (req, res, next) => {
     let avatar;
     try {
       avatar = gravatar.url(email, { s: "200", r: "pg", d: "mm" });
+      console.log(avatar);
     } catch (e) {
       const error = new HttpError("gravatar error", 400);
       return next(error);
@@ -38,6 +34,8 @@ const register = async (req, res, next) => {
       name: name,
       email: email,
       password: password,
+      roll: roll,
+      branch: branch,
       avatar: avatar,
     });
 
