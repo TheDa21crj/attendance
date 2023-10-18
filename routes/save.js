@@ -16,7 +16,7 @@ const {
 // Public || Start Attendance
 router.post(
   "/StartorStopAttendance",
-  [check("email", "email is Required").not().isEmpty()],
+  [check("email", "value is Required").isString().isEmail()],
   [check("value", "value is Required").not().isEmpty()],
   startOrStopAttendance
 );

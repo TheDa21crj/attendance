@@ -1,6 +1,6 @@
 const { validationResult } = require("express-validator");
 const AttendanceControl = require("../Schema/attendanceControl");
-const { Attendance } = require("../Schema/attendance");
+const Attendance = require("../Schema/attendance");
 
 const User = require("../Schema/user");
 
@@ -18,11 +18,10 @@ async function startOrStopAttendance(req, res) {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { value } = req.body;
-
+    const { value, email } = req.body;
     await AttendanceControl.updateOne({}, { start: value });
 
-    emailGlobal = email;
+    // emailGlobal = email;
     return res.status(202).json({ message: value });
   } catch (err) {
     console.log(err);
@@ -33,7 +32,7 @@ async function startOrStopAttendance(req, res) {
 /*
   Required values in request:
   {
-    values : String of format - roll,name,branch
+    values : String of format - roll
   }
  */
 async function start(req, res) {
@@ -49,14 +48,27 @@ async function start(req, res) {
 
     console.table(valuesArray);
 
-    const user = await Users.findOne({ roll });
+    const user = await User.findOne({ roll: valuesArray[0] });
 
-    const attendance = new Attendance({
-      user: user._id,
-      date: new Date(),
-    });
+    let startValue = await AttendanceControl.findOne({});
 
-    await attendance.save();
+    if (startValue == null) {
+      const attControl = new AttendanceControl({ start: false });
+      await attControl.save();
+      startValue = attControl;
+    }
+
+    if (startValue.start) {
+      const attendance = new Attendance({
+        user: user._id,
+        date: new Date(),
+      });
+      await attendance.save();
+    } else {
+      return res
+        .status(403)
+        .json({ message: "User not allowed to add attendance now." });
+    }
 
     return res.status(200).json({ success: true });
   } catch (error) {
@@ -67,11 +79,23 @@ async function start(req, res) {
 
 async function view(req, res) {
   try {
-    const email = req.locals.userData.userEmail;
+    const email = res.locals.userData.userEmail;
     const user = await User.findOne({ email });
     if (user) {
-      const attendances = Attendance.find({ user: user._id }).lean();
-      return res.status(202).json({ message: attendances });
+      const attendances = await Attendance.find({ user: user._id })
+        .populate("user")
+        .lean();
+      const attandanceArr = [];
+      for (let x of attendances) {
+        attandanceArr.push({
+          name: x.user.name,
+          roll: x.user.roll,
+          branch: x.user.branch,
+          time: x.date.toTimeString().substring(0, 8),
+          date: x.date.toDateString(),
+        });
+      }
+      return res.status(202).json({ attandanceArr });
     } else {
       return res.status(202).json("No Such User");
     }
