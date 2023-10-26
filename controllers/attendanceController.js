@@ -1,7 +1,6 @@
 const { validationResult } = require("express-validator");
 const AttendanceControl = require("../Schema/attendanceControl");
 const Attendance = require("../Schema/attendance");
-
 const User = require("../Schema/user");
 
 /*
@@ -18,8 +17,11 @@ async function startOrStopAttendance(req, res) {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { value, email } = req.body;
-    await AttendanceControl.updateOne({}, { start: value });
+    const { value } = req.body;
+    await User.updateOne(
+      { email: res.locals.userData.userEmail },
+      { start: value }
+    );
 
     // emailGlobal = email;
     return res.status(202).json({ message: value });
@@ -58,7 +60,7 @@ async function start(req, res) {
       startValue = attControl;
     }
 
-    if (startValue.start) {
+    if (startValue.start && user.start) {
       const attendance = new Attendance({
         user: user._id,
         date: new Date(),
@@ -105,8 +107,39 @@ async function view(req, res) {
   }
 }
 
+async function toggleAdminAttendance(req, res) {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const { value } = req.body;
+    const user = await User.findOne({
+      email: res.locals.userData.userEmail,
+    });
+    if (user.role && user.role.includes("admin")) {
+      let startValue = await AttendanceControl.findOne({});
+
+      if (startValue == null) {
+        const attControl = new AttendanceControl({ start: false });
+        await attControl.save();
+        startValue = attControl;
+      }
+      startValue.set("start", value);
+      await startValue.save();
+      return res.status(202).json({ message: value });
+    } else {
+      res.status(403).json({ err: "Admins only allowed" });
+    }
+  } catch (err) {
+    console.log("[", Date(), "] : [", err, "]");
+    return res.status(500).json({ err: "Some error occured." });
+  }
+}
+
 module.exports = {
   startOrStopAttendance,
   start,
   view,
+  toggleAdminAttendance,
 };

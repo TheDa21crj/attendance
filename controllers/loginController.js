@@ -81,7 +81,7 @@ const login = async (req, res, next) => {
 
   var validateEmail;
   try {
-    validateEmail = await user.findOne({ email });
+    validateEmail = await user.findOne({ email }).lean();
 
     console.log(validateEmail);
 
@@ -111,7 +111,7 @@ const login = async (req, res, next) => {
       console.log(err);
       return next(error);
     }
-
+    delete validateEmail.password;
     res.status(200).json({ success: true, token: token, user: validateEmail });
   } catch (e) {
     const error = new HttpError("User not found", 500);

@@ -2,7 +2,6 @@ const HttpError = require("../models/HttpError");
 const user = require("../Schema/user");
 const jwt = require("jsonwebtoken");
 const { check, validationResult } = require("express-validator");
-const nodemailer = require("nodemailer");
 
 const getUser = async (req, res, next) => {
   const errors = validationResult(req);

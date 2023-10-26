@@ -32,6 +32,14 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  start: {
+    type: Boolean,
+    default: false,
+  },
+  role: {
+    type: ["admin", "user"],
+    default: "member",
+  },
 });
 
 // token
