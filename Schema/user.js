@@ -8,6 +8,7 @@ const UserSchema = new mongoose.Schema({
   },
   email: {
     type: "string",
+    unique: true,
     required: true,
   },
   avatar: {
@@ -18,40 +19,26 @@ const UserSchema = new mongoose.Schema({
     type: "string",
     required: true,
   },
-  start: {
-    type: "string",
-    default: "Stop",
+  roll: {
+    type: Number,
+    required: true,
+    unique: true,
   },
-  attendance: [
-    {
-      name: {
-        type: "string",
-        required: true,
-        default: "",
-      },
-      roll: {
-        type: "string",
-        required: true,
-        default: "",
-      },
-      branch: {
-        type: "string",
-        required: true,
-        default: "",
-      },
-      date: {
-        type: String,
-        default: Date.now,
-      },
-      time: {
-        type: String,
-        default: "",
-      },
-    },
-  ],
+  branch: {
+    type: String,
+    required: true,
+  },
   date: {
     type: Date,
     default: Date.now,
+  },
+  start: {
+    type: Boolean,
+    default: false,
+  },
+  role: {
+    type: ["admin", "user"],
+    default: "member",
   },
 });
 
